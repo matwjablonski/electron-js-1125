@@ -6,3 +6,26 @@
     --background-color: #282c34;
     --text-color: #61dafb;
 }
+
+@theme {
+  --color-main: #bb86fc;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Dark mode styles */
+}
+
+@media (prefers-color-scheme: light) {
+  /* Light mode styles */
+}
+
+.dark {
+    --background-color: #20232a;
+    --text-color: #bb86fc;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: Arial, Helvetica, sans-serif;
+}

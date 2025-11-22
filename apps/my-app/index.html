@@ -7,16 +7,17 @@
     <link href="./dist/styles.css" rel="stylesheet">
     <title>Hello Electron!</title>
   </head>
-  <body >
+  <body>
+    <button id="themeToggle">Toggle Theme</button>
     <h1>Hello Electron!</h1>
     <div class="flex gap-4">
       <button id="sendMessage">Send Message</button>
 
-      <button id="open-file">Open file</button>
+      <button id="open-file" class="bg-main">Open file</button>
       <button id="save-file">Save file</button>
     </div>
     <textarea name="fileContent" id="fileContent"></textarea>
-
+    
     <footer>
       <div id="app-info"></div>
     </footer>

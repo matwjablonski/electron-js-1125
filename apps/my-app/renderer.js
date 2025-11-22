@@ -1,6 +1,11 @@
 const openFileButton = document.getElementById('open-file');
 const saveFileButton = document.getElementById('save-file');
 const textareaForFile = document.getElementById('fileContent');
+const themeToggleButton = document.getElementById('themeToggle');
+
+themeToggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+});
 
 document.getElementById('sendMessage').addEventListener('click', () => {
     window.electronAPI.sendMessage('Hello from Renderer Process!');
