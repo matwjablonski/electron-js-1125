@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, Menu, Tray, globalShortcut, nativeImage } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, Tray, globalShortcut, nativeImage, dialog, Notification } = require('electron')
 const path = require('node:path')
+const fs = require('node:fs');
 
 let mainWindow = null;
 
@@ -80,4 +81,41 @@ ipcMain.handle('get-app-info', async () => {
     nodeVersion: process.versions.node,
     electronVersion: process.versions.electron,
   }
+});
+
+ipcMain.handle('open-file', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openFile'],
+    filters: [
+      { name: 'Pliki tekstowe', extensions: ['txt', 'md'] },
+    ],
+  })
+
+  if (!result.canceled && result.filePaths.length > 0) {
+    const filePath = result.filePaths[0];
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    return fileContent;
+  }
+
+  return null;
+})
+
+ipcMain.handle('save-file', async (event, content) => {
+  const result = await dialog.showSaveDialog(mainWindow, {
+    title: 'Save your file',
+    defaultPath: 'untitled.txt',
+  });
+
+  if (!result.canceled && result.filePath) {
+    fs.writeFileSync(result.filePath, content, 'utf-8');
+
+    new Notification({
+      title: 'File Saved',
+      body: `Your file has been saved to ${result.filePath}`,
+    }).show();
+
+    return true;
+  }
+
+  return false;
 });
